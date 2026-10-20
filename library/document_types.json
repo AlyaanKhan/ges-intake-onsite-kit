@@ -1,0 +1,488 @@
+{
+  "note": "Rule-based document fingerprints. Phrases are matched against normalized text (see TASK.md section 5.3). Field patterns are Python regular expressions compiled with re.MULTILINE | re.IGNORECASE.",
+  "document_types": [
+    {
+      "id": "DT-ENGAGEMENT-LETTER",
+      "cel": "CEL-GOV-001",
+      "match": {
+        "all": [
+          "engagement letter",
+          "peach state advisory"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P3"
+      },
+      "fields": {
+        "client_name": {
+          "pattern": "^Client Name:\\s*(.+)$",
+          "type": "text"
+        },
+        "signature": {
+          "pattern": "^Client Signature:[ \\t]*(\\S.*)$",
+          "type": "text"
+        },
+        "signed_date": {
+          "pattern": "^Date Signed:\\s*(.+)$",
+          "type": "date"
+        }
+      },
+      "required_fields": [
+        "client_name",
+        "signature",
+        "signed_date"
+      ],
+      "identity": {
+        "name_field": "client_name"
+      }
+    },
+    {
+      "id": "DT-DRIVERS-LICENSE",
+      "cel": "CEL-GOV-002",
+      "match": {
+        "all": [
+          "driver license",
+          "department of driver services"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P1"
+      },
+      "fields": {
+        "full_name": {
+          "pattern": "^Name:\\s*(.+)$",
+          "type": "text"
+        },
+        "license_no": {
+          "pattern": "^License No:\\s*(.+)$",
+          "type": "account"
+        },
+        "expiration": {
+          "pattern": "^Expires:\\s*(.+)$",
+          "type": "date"
+        }
+      },
+      "required_fields": [
+        "full_name",
+        "expiration"
+      ],
+      "identity": {
+        "name_field": "full_name"
+      }
+    },
+    {
+      "id": "DT-PASSPORT",
+      "cel": "CEL-GOV-002",
+      "match": {
+        "all": [
+          "passport",
+          "united states of america",
+          "department of state"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P1"
+      },
+      "fields": {
+        "full_name": {
+          "pattern": "^Name:\\s*(.+)$",
+          "type": "text"
+        },
+        "passport_no": {
+          "pattern": "^Passport No:\\s*(.+)$",
+          "type": "account"
+        },
+        "expiration": {
+          "pattern": "^Date of Expiration:\\s*(.+)$",
+          "type": "date"
+        }
+      },
+      "required_fields": [
+        "full_name",
+        "expiration"
+      ],
+      "identity": {
+        "name_field": "full_name"
+      }
+    },
+    {
+      "id": "DT-IRS-TRANSCRIPT",
+      "cel": "CEL-TAX-001",
+      "match": {
+        "all": [
+          "tax return transcript",
+          "internal revenue service"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P3",
+        "by_channel": {
+          "irs_transcript_feed": "P1"
+        },
+        "claims_official": true
+      },
+      "fields": {
+        "taxpayer_name": {
+          "pattern": "^Taxpayer Name:\\s*(.+)$",
+          "type": "text"
+        },
+        "ssn": {
+          "pattern": "^SSN Provided:\\s*(\\S+)\\s*$",
+          "type": "ssn"
+        },
+        "tax_year": {
+          "pattern": "^Tax Year:\\s*(\\d{4})\\s*$",
+          "type": "year"
+        }
+      },
+      "required_fields": [
+        "ssn",
+        "tax_year"
+      ],
+      "identity": {
+        "ssn_field": "ssn",
+        "name_field": "taxpayer_name"
+      }
+    },
+    {
+      "id": "DT-1040",
+      "cel": "CEL-TAX-001",
+      "match": {
+        "all": [
+          "form 1040",
+          "u.s. individual income tax return"
+        ],
+        "none": [
+          "tax return transcript"
+        ]
+      },
+      "provenance": {
+        "default": "P3"
+      },
+      "fields": {
+        "taxpayer_name": {
+          "pattern": "^Your first name and last name:\\s*(.+)$",
+          "type": "text"
+        },
+        "ssn": {
+          "pattern": "^Your social security number:\\s*(\\S+)\\s*$",
+          "type": "ssn"
+        },
+        "tax_year": {
+          "pattern": "^Tax Year:\\s*(\\d{4})\\s*$",
+          "type": "year"
+        }
+      },
+      "required_fields": [
+        "ssn",
+        "tax_year"
+      ],
+      "identity": {
+        "ssn_field": "ssn",
+        "name_field": "taxpayer_name"
+      }
+    },
+    {
+      "id": "DT-W2",
+      "cel": "CEL-INC-001",
+      "match": {
+        "all": [
+          "form w-2",
+          "wage and tax statement"
+        ],
+        "none": [
+          "form w-2c",
+          "corrected wage"
+        ]
+      },
+      "provenance": {
+        "default": "P2"
+      },
+      "fields": {
+        "employee_name": {
+          "pattern": "^Employee's name:\\s*(.+)$",
+          "type": "text"
+        },
+        "employee_ssn": {
+          "pattern": "^Employee's SSN:\\s*(\\S+)\\s*$",
+          "type": "ssn"
+        },
+        "employer_ein": {
+          "pattern": "^Employer EIN:\\s*(\\S+)\\s*$",
+          "type": "ein"
+        },
+        "tax_year": {
+          "pattern": "^Tax Year:\\s*(\\d{4})\\s*$",
+          "type": "year"
+        },
+        "wages": {
+          "pattern": "^Box 1 Wages, tips, other compensation:\\s*(.+)$",
+          "type": "money"
+        }
+      },
+      "required_fields": [
+        "employee_ssn",
+        "employer_ein",
+        "tax_year",
+        "wages"
+      ],
+      "identity": {
+        "ssn_field": "employee_ssn",
+        "name_field": "employee_name"
+      },
+      "supersede": {
+        "key": [
+          "employer_ein",
+          "tax_year"
+        ],
+        "supersedes": [
+          "DT-W2"
+        ]
+      }
+    },
+    {
+      "id": "DT-W2C",
+      "cel": "CEL-INC-001",
+      "match": {
+        "all": [
+          "form w-2c",
+          "corrected wage and tax statement"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P2"
+      },
+      "fields": {
+        "employee_name": {
+          "pattern": "^Employee's name:\\s*(.+)$",
+          "type": "text"
+        },
+        "employee_ssn": {
+          "pattern": "^Employee's SSN:\\s*(\\S+)\\s*$",
+          "type": "ssn"
+        },
+        "employer_ein": {
+          "pattern": "^Employer EIN:\\s*(\\S+)\\s*$",
+          "type": "ein"
+        },
+        "tax_year": {
+          "pattern": "^Tax Year:\\s*(\\d{4})\\s*$",
+          "type": "year"
+        },
+        "wages": {
+          "pattern": "^Box 1 Wages, tips, other compensation \\(corrected\\):\\s*(.+)$",
+          "type": "money"
+        }
+      },
+      "required_fields": [
+        "employee_ssn",
+        "employer_ein",
+        "tax_year",
+        "wages"
+      ],
+      "identity": {
+        "ssn_field": "employee_ssn",
+        "name_field": "employee_name"
+      },
+      "supersede": {
+        "key": [
+          "employer_ein",
+          "tax_year"
+        ],
+        "supersedes": [
+          "DT-W2",
+          "DT-W2C"
+        ]
+      }
+    },
+    {
+      "id": "DT-1099-NEC",
+      "cel": "CEL-INC-002",
+      "match": {
+        "all": [
+          "form 1099-nec",
+          "nonemployee compensation"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P2"
+      },
+      "fields": {
+        "recipient_name": {
+          "pattern": "^Recipient's name:\\s*(.+)$",
+          "type": "text"
+        },
+        "recipient_tin": {
+          "pattern": "^Recipient's TIN:\\s*(\\S+)\\s*$",
+          "type": "ssn"
+        },
+        "payer_tin": {
+          "pattern": "^Payer's TIN:\\s*(\\S+)\\s*$",
+          "type": "ein"
+        },
+        "tax_year": {
+          "pattern": "^Tax Year:\\s*(\\d{4})\\s*$",
+          "type": "year"
+        },
+        "amount": {
+          "pattern": "^Box 1 Nonemployee compensation:\\s*(.+)$",
+          "type": "money"
+        }
+      },
+      "required_fields": [
+        "recipient_tin",
+        "tax_year",
+        "amount"
+      ],
+      "identity": {
+        "ssn_field": "recipient_tin",
+        "name_field": "recipient_name"
+      }
+    },
+    {
+      "id": "DT-1099-INT",
+      "cel": "CEL-INC-002",
+      "match": {
+        "all": [
+          "form 1099-int",
+          "interest income"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P2"
+      },
+      "fields": {
+        "recipient_name": {
+          "pattern": "^Recipient's name:\\s*(.+)$",
+          "type": "text"
+        },
+        "recipient_tin": {
+          "pattern": "^Recipient's TIN:\\s*(\\S+)\\s*$",
+          "type": "ssn"
+        },
+        "payer_tin": {
+          "pattern": "^Payer's TIN:\\s*(\\S+)\\s*$",
+          "type": "ein"
+        },
+        "tax_year": {
+          "pattern": "^Tax Year:\\s*(\\d{4})\\s*$",
+          "type": "year"
+        },
+        "amount": {
+          "pattern": "^Box 1 Interest income:\\s*(.+)$",
+          "type": "money"
+        }
+      },
+      "required_fields": [
+        "recipient_tin",
+        "tax_year",
+        "amount"
+      ],
+      "identity": {
+        "ssn_field": "recipient_tin",
+        "name_field": "recipient_name"
+      }
+    },
+    {
+      "id": "DT-BANK-STATEMENT",
+      "cel": "CEL-BNK-001",
+      "match": {
+        "all": [
+          "statement period",
+          "beginning balance",
+          "ending balance"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P2"
+      },
+      "fields": {
+        "account_holder": {
+          "pattern": "^Account Holder:\\s*(.+)$",
+          "type": "text"
+        },
+        "account": {
+          "pattern": "^Account Number:\\s*([0-9][0-9 \\-]*[0-9])\\s*$",
+          "type": "account"
+        },
+        "period": {
+          "pattern": "^Statement Period:\\s*(.+?)\\s+(?:-|to|through)\\s+(.+?)\\s*$",
+          "type": "date_range"
+        },
+        "beginning_balance": {
+          "pattern": "^Beginning Balance:\\s*(.+)$",
+          "type": "money"
+        },
+        "ending_balance": {
+          "pattern": "^Ending Balance:\\s*(.+)$",
+          "type": "money"
+        }
+      },
+      "required_fields": [
+        "account",
+        "period",
+        "beginning_balance",
+        "ending_balance"
+      ],
+      "identity": {
+        "name_field": "account_holder",
+        "account_field": "account"
+      },
+      "supersede": {
+        "key": [
+          "account",
+          "period_start"
+        ],
+        "supersedes": [
+          "DT-BANK-STATEMENT"
+        ]
+      }
+    },
+    {
+      "id": "DT-GL-EXPORT",
+      "cel": "CEL-BKS-001",
+      "match": {
+        "all": [
+          "general ledger export",
+          "gl account,date,description,debit,credit"
+        ],
+        "none": []
+      },
+      "provenance": {
+        "default": "P3"
+      },
+      "fields": {
+        "prepared_for": {
+          "pattern": "^Prepared for:\\s*(.+)$",
+          "type": "text"
+        },
+        "period": {
+          "pattern": "^Period:\\s*(.+?)\\s+(?:-|to|through)\\s+(.+?)\\s*$",
+          "type": "date_range"
+        }
+      },
+      "required_fields": [
+        "period"
+      ],
+      "identity": {
+        "name_field": "prepared_for"
+      },
+      "supersede": {
+        "key": [
+          "period_start"
+        ],
+        "supersedes": [
+          "DT-GL-EXPORT"
+        ]
+      }
+    }
+  ]
+}

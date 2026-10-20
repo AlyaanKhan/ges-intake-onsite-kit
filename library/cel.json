@@ -1,0 +1,27 @@
+{
+  "library_version": "SYNTH-CEL-1.0",
+  "note": "Synthetic evidence library for the hiring exercise. IDs look like GES CEL IDs but the content is invented.",
+  "cel": [
+    {"id": "CEL-GOV-001", "name": "Signed engagement letter", "client_label": "your signed engagement letter",
+     "criticality": "C1", "security": "S3", "reuse": "RU1", "review": "RV1",
+     "allowed_provenance": ["P1", "P2", "P3"], "currentness": {"rule": "none"}},
+    {"id": "CEL-GOV-002", "name": "Government photo ID", "client_label": "a current government-issued photo ID (driver's license or passport)",
+     "criticality": "C1", "security": "S5", "reuse": "RU3", "review": "RV1",
+     "allowed_provenance": ["P1", "P2"], "currentness": {"rule": "not_expired"}},
+    {"id": "CEL-TAX-001", "name": "Prior-year individual income tax return", "client_label": "last year's tax return or IRS transcript",
+     "criticality": "C1", "security": "S5", "reuse": "RU2", "review": "RV2",
+     "allowed_provenance": ["P1", "P3"], "currentness": {"rule": "tax_year", "offset": -1}},
+    {"id": "CEL-INC-001", "name": "Wage statement (W-2 / W-2c)", "client_label": "your W-2 wage statements",
+     "criticality": "C2", "security": "S5", "reuse": "RU2", "review": "RV1",
+     "allowed_provenance": ["P2"], "currentness": {"rule": "tax_year", "offset": 0}},
+    {"id": "CEL-INC-002", "name": "Information return (1099-NEC / 1099-INT)", "client_label": "your 1099 forms",
+     "criticality": "C2", "security": "S5", "reuse": "RU2", "review": "RV1",
+     "allowed_provenance": ["P2"], "currentness": {"rule": "tax_year", "offset": 0}},
+    {"id": "CEL-BNK-001", "name": "Bank account statement", "client_label": "your monthly bank statements",
+     "criticality": "C1", "security": "S5", "reuse": "RU2", "review": "RV1",
+     "allowed_provenance": ["P2"], "currentness": {"rule": "period_overlap"}},
+    {"id": "CEL-BKS-001", "name": "General ledger export", "client_label": "your bookkeeping (general ledger) export",
+     "criticality": "C3", "security": "S4", "reuse": "RU2", "review": "RV2",
+     "allowed_provenance": ["P3"], "currentness": {"rule": "period_overlap"}}
+  ]
+}

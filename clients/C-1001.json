@@ -1,0 +1,7 @@
+{
+  "client_id": "C-1001",
+  "name": "Jordan Q. Rivera",
+  "ssn": "900-12-3456",
+  "accounts": ["4821", "9930"],
+  "engagement": {"service": "4A", "period_start": "2025-01-01", "period_end": "2025-06-30"}
+}

@@ -1,0 +1,37 @@
+{
+  "services": [
+    {
+      "id": "4A",
+      "name": "Financial Reconstruction",
+      "pdas": [
+        {"id": "PDA-A01", "name": "Engagement is authorized", "requires_cpa": false, "depends_on": [],
+         "pathways": [
+           {"name": "signed_letter", "requirements": [{"cel": "CEL-GOV-001", "accepted_grades": ["E1", "E3"]}]}
+         ]},
+        {"id": "PDA-A02", "name": "Taxpayer identity is established", "requires_cpa": false, "depends_on": [],
+         "pathways": [
+           {"name": "photo_id", "requirements": [{"cel": "CEL-GOV-002", "accepted_grades": ["E1"]}]},
+           {"name": "irs_record_and_wages", "requirements": [
+              {"cel": "CEL-TAX-001", "accepted_grades": ["E1"], "provenance": ["P1"]},
+              {"cel": "CEL-INC-001", "accepted_grades": ["E1"]}
+           ]}
+         ]},
+        {"id": "PDA-A03", "name": "Cash activity is complete for the engagement period", "requires_cpa": false, "depends_on": [],
+         "pathways": [
+           {"name": "bank_statements", "requirements": [
+              {"cel": "CEL-BNK-001", "accepted_grades": ["E1"], "coverage": "engagement_period_per_account"}
+           ]}
+         ]},
+        {"id": "PDA-A04", "name": "Income sources are identified", "requires_cpa": false, "depends_on": [],
+         "pathways": [
+           {"name": "wage_statements", "requirements": [{"cel": "CEL-INC-001", "accepted_grades": ["E1"]}]},
+           {"name": "information_returns", "requirements": [{"cel": "CEL-INC-002", "accepted_grades": ["E1"]}]}
+         ]},
+        {"id": "PDA-A05", "name": "Books reconcile to bank activity", "requires_cpa": true, "depends_on": ["PDA-A03"],
+         "pathways": [
+           {"name": "ledger", "requirements": [{"cel": "CEL-BKS-001", "accepted_grades": ["E1", "E3"]}]}
+         ]}
+      ]
+    }
+  ]
+}

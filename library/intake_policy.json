@@ -1,0 +1,16 @@
+{
+  "max_bytes": 65536,
+  "allowed_extensions": [".txt", ".csv"],
+  "channels": ["portal_upload", "public_upload", "email", "irs_transcript_feed"],
+  "suspicious_instruction_patterns": [
+    "ignore (all )?(previous|prior) (instructions|rules)",
+    "mark (all|every) requirements? (as )?satisfied",
+    "system note to (the )?ai",
+    "you are now (an?|the) "
+  ],
+  "review_flags": ["no_match", "ambiguous_type", "missing_required_field", "unparseable_field",
+                   "name_mismatch", "invalid_period", "unknown_account", "suspicious_instructions"],
+  "e4_flags": ["missing_required_field", "unparseable_field", "name_mismatch", "invalid_period"],
+  "informational_flags": ["claimed_official_source_unverified"],
+  "security_flags": ["identity_mismatch"]
+}

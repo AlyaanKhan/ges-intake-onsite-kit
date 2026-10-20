@@ -1,0 +1,7 @@
+{
+  "client_id": "C-2002",
+  "name": "Morgan Ellis",
+  "ssn": "900-98-7654",
+  "accounts": ["1188"],
+  "engagement": {"service": "4A", "period_start": "2025-01-01", "period_end": "2025-06-30"}
+}
